@@ -1,4 +1,4 @@
-public abstract class IEvent
+public interface IEvent
 {
     public int Id { get; set; }
     public string Data { get; set; }

@@ -1,4 +1,4 @@
-public class WorkflowStep
+public class WorkflowStep : WorkflowStepTemplate
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -7,7 +7,7 @@ public class WorkflowStep
     public int? RoleId { get; set; }
     public string Comment { get; set; }
 
-    public void SetStatus()
+    private void SetStatus()
     {
         // TODO
     }

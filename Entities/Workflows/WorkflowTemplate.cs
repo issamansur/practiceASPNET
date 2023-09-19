@@ -9,4 +9,11 @@ public class WorkflowTemplate
         // TODO
         return new Request();
     }
+
+    public AddStep(){
+        // TODO
+    }
+    public EditStep(){
+        // TODO
+    }
 }

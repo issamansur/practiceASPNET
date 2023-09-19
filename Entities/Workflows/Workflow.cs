@@ -1,4 +1,4 @@
-public class Workflow
+public class Workflow: WorkflowTemplate
 {
     public int Id { get; set; }
     public int WorkflowTemplateId { get; set; }
