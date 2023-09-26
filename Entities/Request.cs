@@ -1,13 +1,18 @@
 public class Request
 {
+    [Key]
     public int Id { get; set; }
-    private List<IEvent> Events { get; set; }
+    
+    private virtual List<IEvent> Events { get; set; }
+
     public int UserId { get; set; }
-    public User User { get; set; }
+    public virtual User User { get; set; }
+
     public int DocumentId { get; set; }
-    public Document Document { get; set; }
+    public virtual Document Document { get; set; }
+
     public int WorkflowId { get; set; }
-    public Workflow Workflow { get; set; }
+    public virtual Workflow Workflow { get; set; }
 
     public bool IsApproved()
     {
