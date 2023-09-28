@@ -4,17 +4,19 @@ public class User
     public int Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
-
     public int RoleId { get; set; }
 
-    public User(int id, string name, string email)
+    public Role Role { get; set; }
+
+    public User(string name, string email, int roleId)
     {
-        Id = id;
         Name = name;
         Email = email;
+
+        RoleId = roleId;
     }
 
-    static public User Create(string name, string email) {
-        return User(id, name, email);
+    static public User Create(string name, string email, int roleId) {
+        return User(name, email, roleId);
     }
 }

@@ -4,13 +4,12 @@ public class Role
     public int Id { get; set; }
     public string Name { get; set; }
     
-    public Role(int id, string name)
+    public Role(string name)
     {
-        Id = id;
         Name = name;
     }
 
     static public Role Create(string name) {
-        return Role(id, name);
+        return Role(name);
     }
 }
