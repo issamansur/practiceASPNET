@@ -1,6 +1,10 @@
+using practiceASPNET.Domains.Entities.Users;
+
+namespace practiceASPNET.Domains.Entities.Workflows;
+
 public class WorkflowTemplate
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public List<WorkflowStepTemplate> Steps { get; set; }
 
@@ -10,10 +14,10 @@ public class WorkflowTemplate
         return new Request();
     }
 
-    public AddStep(){
+    public void AddStep(){
         // TODO
     }
-    public EditStep(){
+    public void EditStep(){
         // TODO
     }
 }

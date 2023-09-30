@@ -1,3 +1,5 @@
+namespace practiceASPNET.Domains.Entities.Workflows;
+
 public class WorkflowStep : WorkflowStepTemplate
 {
     public int Id { get; set; }
