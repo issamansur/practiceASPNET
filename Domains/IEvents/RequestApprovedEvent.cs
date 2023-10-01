@@ -1,3 +1,5 @@
+namespace practiceASPNET.Domains;
+
 public class RequestApprovedEvent : IEvent
 {
     public int RequestId { get; set; }

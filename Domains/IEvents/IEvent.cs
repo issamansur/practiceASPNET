@@ -1,3 +1,5 @@
+namespace practiceASPNET.Domains;
+
 public interface IEvent
 {
     public int Id { get; set; }

@@ -1,6 +1,4 @@
-using practiceASPNET.Domains.Entities.Users;
-
-namespace practiceASPNET.Domains.Entities.Workflows;
+namespace practiceASPNET.Domains;
 
 public class WorkflowTemplate
 {
@@ -14,10 +12,12 @@ public class WorkflowTemplate
         return new Request();
     }
 
-    public void AddStep(){
+    public void AddStep()
+    {
         // TODO
     }
-    public void EditStep(){
+    public void EditStep()
+    {
         // TODO
     }
 }

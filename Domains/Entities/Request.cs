@@ -1,17 +1,19 @@
+namespace practiceASPNET.Domains;
+
 public class Request
 {
-    public GUID Id { get; set; }
+    public Guid Id { get; set; }
     public int UserId { get; set; }
     public int DocumentId { get; set; }
     public int WorkflowId { get; set; }
 
-    
-    public virtual User User { get; set; }
-    public virtual Document Document { get; set; }
-    public virtual Workflow Workflow { get; set; }
-    private virtual List<IEvent> Events { get; set; }
 
-    public Request(GUID id, int userId, int documentId, int workflowId)
+    public User User { get; set; }
+    public Document Document { get; set; }
+    public Workflow Workflow { get; set; }
+    private List<IEvent> Events { get; set; }
+
+    public Request(Guid id, int userId, int documentId, int workflowId)
     {
         Id = id;
         UserId = userId;
@@ -21,7 +23,7 @@ public class Request
 
     public Request Create(int userId, int documentId, int workflowId)
     {
-        return new Request(GUID.new(), int userId, int documentId, int workflowId);
+        return new Request(Guid.NewGuid(), userId, documentId, workflowId);
     }
 
     public bool IsApproved()
