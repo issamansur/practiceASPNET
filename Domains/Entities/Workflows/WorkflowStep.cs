@@ -1,6 +1,6 @@
 namespace practiceASPNET.Domains;
 
-public class WorkflowStep : WorkflowStepTemplate
+public class WorkflowStep
 {
     public int Id { get; set; }
     public string Name { get; set; }

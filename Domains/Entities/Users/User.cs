@@ -1,38 +1,37 @@
 using System.Data;
+using practiceASPNET.Domains.Errors;
 using practiceASPNET.Utils;
 
 namespace practiceASPNET.Domains;
 
 public class User
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
-    public int RoleId { get; set; }
+    public Guid RoleId { get; set; }
 
-    // public virtual Role Role { get; set; }
-
-    public User(string name, string email, int roleId)
+    public User(Guid id, string name, string email, Guid roleId)
     {
-        if (string.IsNullOrEmpty(name))
-            throw new NoNullAllowedException("Field 'Name' can't be empty!");
-        if (!Validator.IsValidName(name))
-            throw new ArgumentException("Field 'Name' has invalid format!");
+        Validator.IsValidGuid(id);
+        Validator.IsValidName(name);
+        Validator.IsValidEmail(email);
+        Validator.IsValidGuid(roleId, "RoleId");
 
-        if (string.IsNullOrEmpty(email))
-            throw new NoNullAllowedException("Field 'Email' can't be empty!");
-        if (!Validator.IsValidEmail(email))
-            throw new ArgumentException("Field 'Email' has invalid format!");
-
+        Id = id;
         Name = name;
         Email = email;
-
         RoleId = roleId;
     }
 
-    static public User Create(string name, string email, int roleId)
+    static public User Create(string name, string email, Guid roleId)
     {
-        return new User(name, email, roleId);
+        return new User(Guid.NewGuid(), name, email, roleId);
+    }
+
+    static public User Create(string name, string email, Role role)
+    {
+        return new User(Guid.NewGuid(), name, email, role.Id);
     }
 }
 

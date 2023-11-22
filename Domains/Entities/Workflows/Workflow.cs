@@ -1,8 +1,8 @@
 namespace practiceASPNET.Domains;
 
-public class Workflow : WorkflowTemplate
+public class Workflow
 {
-    public Guid WorkflowTemplateId { get; set; }
+    public Guid WorkflowTemplateId { get; init; }
     public string Name { get; set; }
 
     public virtual List<WorkflowStep> Steps { get; set; }
@@ -11,6 +11,7 @@ public class Workflow : WorkflowTemplate
     {
         WorkflowTemplateId = id;
         Name = name;
+
         Steps = steps;
     }
 
