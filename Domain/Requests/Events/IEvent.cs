@@ -1,6 +1,6 @@
 using practiceASPNET.Utils;
 
-namespace practiceASPNET.Domains;
+namespace practiceASPNET.Domain.Requests.Events;
 
 // Use abstract class instead of interface
 // because we create a base class for all events
@@ -8,17 +8,16 @@ namespace practiceASPNET.Domains;
 public abstract class IEvent
 {
     public Guid Id { get; init; }
-
     public Guid RequestId { get; set; }
     public string Data { get; set; }
 
-    public IEvent(Guid id, string data, Guid requestId)
+    public IEvent(Guid id, Guid requestId, string data)
     {
         Validator.IsValidGuid(id);
         Validator.IsValidGuid(requestId, "RequestId");
 
         Id = id;
-        Data = data;
         RequestId = requestId;
+        Data = data;
     }
 }

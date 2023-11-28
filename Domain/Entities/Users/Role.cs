@@ -1,7 +1,6 @@
-using practiceASPNET.Domains.Errors;
 using practiceASPNET.Utils;
 
-namespace practiceASPNET.Domains;
+namespace practiceASPNET.Domain;
 
 public class Role
 {
@@ -10,8 +9,8 @@ public class Role
 
     public Role(Guid id, string name)
     {
-        Validator.IsValidGuid(id, "Id");
-        Validator.IsValidName(name, "Name");
+        Validator.IsValidGuid(id);
+        Validator.IsValidName(name);
 
         Id = id;
         Name = name;

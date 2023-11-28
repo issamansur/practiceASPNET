@@ -1,6 +1,7 @@
-using practiceASPNET.Domains.Errors;
+using practiceASPNET.Domain.Errors;
+using practiceASPNET.Domain.Requests;
 
-namespace practiceASPNET.Domains;
+namespace practiceASPNET.Domain.Entities.Workflows.Templates;
 
 public class WorkflowTemplate
 {
@@ -10,7 +11,7 @@ public class WorkflowTemplate
 
     public WorkflowTemplate()
     {
-        
+
     }
 
     public Request Create(User user, Document document)

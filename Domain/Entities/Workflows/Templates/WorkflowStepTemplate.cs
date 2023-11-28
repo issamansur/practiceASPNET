@@ -1,4 +1,4 @@
-namespace practiceASPNET.Domains;
+namespace practiceASPNET.Domain.Entities.Workflows.Templates;
 
 public class WorkflowStepTemplate
 {

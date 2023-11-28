@@ -1,3 +1,3 @@
-﻿using practiceASPNET.Domains;
+﻿using practiceASPNET.Domain;
 
 Console.WriteLine("Hello, World!");
