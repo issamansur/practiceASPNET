@@ -1,6 +1,6 @@
-using practiceASPNET.Utils;
+using PracticeASPNET.Utils;
 
-namespace practiceASPNET.Domain;
+namespace PracticeASPNET.Domain;
 
 public class User
 {

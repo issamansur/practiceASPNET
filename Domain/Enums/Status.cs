@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace practiceASPNET.Domain.Enums
+namespace PracticeASPNET.Domain.Enums
 {
     public enum Status
     {

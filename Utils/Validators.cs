@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace practiceASPNET.Utils;
+namespace PracticeASPNET.Utils;
 
 static public class Validator
 {

@@ -1,7 +1,7 @@
-using practiceASPNET.Domain.Enums;
-using practiceASPNET.Utils;
+using PracticeASPNET.Domain.Enums;
+using PracticeASPNET.Utils;
 
-namespace practiceASPNET.Domain;
+namespace PracticeASPNET.Domain;
 
 public class WorkflowStep
 {

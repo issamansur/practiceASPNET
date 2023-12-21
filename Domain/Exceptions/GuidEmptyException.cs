@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 /* DEPRECATED */
 
-namespace practiceASPNET.Domain.Errors
+namespace PracticeASPNET.Domain.Errors
 {
     [Serializable]
     public class GuidEmptyException: Exception

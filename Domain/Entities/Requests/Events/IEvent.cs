@@ -1,6 +1,6 @@
-using practiceASPNET.Utils;
+using PracticeASPNET.Utils;
 
-namespace practiceASPNET.Domain.Requests.Events;
+namespace PracticeASPNET.Domain.Requests.Events;
 
 // Use abstract class instead of interface
 // because we create a base class for all events

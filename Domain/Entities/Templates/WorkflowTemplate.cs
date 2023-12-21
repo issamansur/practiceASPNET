@@ -1,7 +1,7 @@
-using practiceASPNET.Domain.Errors;
-using practiceASPNET.Domain.Requests;
+using PracticeASPNET.Domain.Entities.Requests;
+using PracticeASPNET.Domain.Errors;
 
-namespace practiceASPNET.Domain.Entities.Workflows.Templates;
+namespace PracticeASPNET.Domain.Entities.Workflows.Templates;
 
 public class WorkflowTemplate
 {

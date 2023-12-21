@@ -1,8 +1,9 @@
-using practiceASPNET.Domain.Enums;
-using practiceASPNET.Domain.Requests.Events;
-using practiceASPNET.Utils;
+using PracticeASPNET.Domain;
+using PracticeASPNET.Domain.Entities.Requests;
+using PracticeASPNET.Domain.Enums;
+using PracticeASPNET.Utils;
 
-namespace practiceASPNET.Domain.Requests;
+namespace PracticeASPNET.Domain.Entities.Requests;
 
 public class Request
 {

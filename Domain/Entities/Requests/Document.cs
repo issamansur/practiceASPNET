@@ -1,7 +1,6 @@
-using System.Data;
-using practiceASPNET.Utils;
+using PracticeASPNET.Utils;
 
-namespace practiceASPNET.Domain.Requests;
+namespace PracticeASPNET.Domain.Entities.Requests;
 
 public class Document
 {

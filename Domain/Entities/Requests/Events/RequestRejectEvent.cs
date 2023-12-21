@@ -1,4 +1,4 @@
-namespace practiceASPNET.Domain.Requests.Events;
+namespace PracticeASPNET.Domain.Requests.Events;
 
 public class RequestRejectEvent : IEvent
 {
