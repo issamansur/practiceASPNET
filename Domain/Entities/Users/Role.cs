@@ -16,7 +16,7 @@ public class Role
         Name = name;
     }
 
-    static public Role Create(string name)
+    public static Role Create(string name)
     {
         return new Role(Guid.NewGuid(), name);
     }

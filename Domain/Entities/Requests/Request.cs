@@ -35,7 +35,7 @@ public class Request
         CurrentStep = currentStep;
     }
 
-    static public Request Create(User user, Document document, Workflow workflow)
+    public static Request Create(User user, Document document, Workflow workflow)
     {
         Request request = new Request(Guid.NewGuid(), user, document, workflow, Status.Pending, 0);
         IEvent @eventOnCreate = RequestCreateEvent.Create(request.Id, $"New request created. Coordinator: {user.Name}. Requester: {document.Email}");

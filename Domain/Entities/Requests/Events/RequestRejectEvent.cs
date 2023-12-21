@@ -7,7 +7,7 @@ public class RequestRejectEvent : IEvent
     {
     }
 
-    static public RequestRejectEvent Create(Guid requestId, string data)
+    public static RequestRejectEvent Create(Guid requestId, string data)
     {
         return new RequestRejectEvent(Guid.NewGuid(), requestId, data);
     }

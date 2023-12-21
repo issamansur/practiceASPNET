@@ -19,7 +19,7 @@ public class Workflow
         Steps = steps;
     }
 
-    static public Workflow Create(string name)
+    public static Workflow Create(string name)
     {
         return new Workflow(Guid.NewGuid(), name, new List<WorkflowStep>());
     }

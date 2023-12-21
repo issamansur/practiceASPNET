@@ -22,12 +22,12 @@ public class User
         Email = email;
     }
 
-    static public User Create(Guid roleId, string name, string email)
+    public static User Create(Guid roleId, string name, string email)
     {
         return new User(Guid.NewGuid(), roleId, name, email);
     }
 
-    static public User Create(Role role, string name, string email)
+    public static User Create(Role role, string name, string email)
     {
         return new User(Guid.NewGuid(), role.Id, name, email);
     }

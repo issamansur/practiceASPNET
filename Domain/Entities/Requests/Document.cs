@@ -16,7 +16,7 @@ public class Document
         Email = email;
     }
 
-    static public Document Create(string name, string email)
+    public static Document Create(string name, string email)
     {
         return new Document(name, email);
     }

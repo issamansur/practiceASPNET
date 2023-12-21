@@ -41,7 +41,7 @@ public class WorkflowStep
         Status = status;
     }
 
-    static public WorkflowStep Create(
+    public static WorkflowStep Create(
         string title, 
         int order,
         string comment = "",
