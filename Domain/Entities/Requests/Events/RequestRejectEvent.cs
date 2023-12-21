@@ -1,6 +1,6 @@
 namespace PracticeASPNET.Domain.Requests.Events;
 
-public class RequestRejectEvent : IEvent
+public class RequestRejectEvent : Event
 {
     public RequestRejectEvent(Guid id, Guid requestId, string data)
         : base(id, requestId, data)

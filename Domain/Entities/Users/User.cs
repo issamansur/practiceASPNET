@@ -26,10 +26,5 @@ public class User
     {
         return new User(Guid.NewGuid(), roleId, name, email);
     }
-
-    public static User Create(Role role, string name, string email)
-    {
-        return new User(Guid.NewGuid(), role.Id, name, email);
-    }
 }
 

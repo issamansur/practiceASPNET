@@ -1,6 +1,6 @@
 namespace PracticeASPNET.Domain.Requests.Events;
 
-public class RequestApproveEvent : IEvent
+public class RequestApproveEvent : Event
 {
     public RequestApproveEvent(Guid id, Guid requestId, string data)
         : base(id, requestId, data)

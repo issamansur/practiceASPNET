@@ -1,6 +1,6 @@
 namespace PracticeASPNET.Domain.Requests.Events;
 
-public class RequestCreateEvent : IEvent
+public class RequestCreateEvent : Event
 {
     public RequestCreateEvent(Guid id, Guid requestId, string data)
         : base(id, requestId, data)
