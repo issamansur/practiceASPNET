@@ -24,6 +24,7 @@ public class WorkflowStep
     {
         Validator.IsValidGuid(id);
         Validator.IsValidName(title, "Title");
+        Validator.IsValidOrder(order);
         if (order < 0)
             throw new ArgumentException("Order must be greater than 0");
         if (user is not null && roleId is not null)

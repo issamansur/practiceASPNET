@@ -1,3 +1,4 @@
+using PracticeASPNET.Domain.Entities.Workflows.Templates;
 using System.Text.RegularExpressions;
 
 namespace PracticeASPNET.Utils;
@@ -31,4 +32,20 @@ public static class Validator
         if (!EmailRegex.IsMatch(email))
             throw new ArgumentException($"Field '{fieldName}' has invalid format!");
     }
+
+    public static void IsValidCollection(ICollection<WorkflowStepTemplate> collection, string fieldName = "Collection", int max = 5)
+    {
+        if (collection is null)
+            throw new ArgumentException($"Field '{fieldName}' can't be empty!");
+        if (collection.Count == 0 || collection.Count < max) 
+            throw new ArgumentException($"Field '{fieldName}' must have at least {max} items!");
+    }
+
+    public static void IsValidOrder(int order, string fieldName = "Order", int max = 5)
+    {
+        if (order < 0)
+            throw new ArgumentException($"Field '{fieldName}' must be greater than 0!");
+        if (order > max)
+            throw new ArgumentException($"Field '{fieldName}' must be less than {max}!");
+    }   
 }

@@ -13,7 +13,11 @@ public class WorkflowTemplate
     {
         Validator.IsValidGuid(id);
         Validator.IsValidName(name);
-        Validator.IsValidRange();
+        Validator.IsValidCollection(steps, "WorkflowStepTemplate", 3);
+
+        Id = id;
+        Name = name;
+        Steps = steps;
     }
 
     public Request Create(User user, Document document)
