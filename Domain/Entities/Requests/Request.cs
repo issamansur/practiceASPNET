@@ -1,13 +1,12 @@
-using PracticeASPNET.Domain;
-using PracticeASPNET.Domain.Entities.Requests;
 using PracticeASPNET.Domain.Enums;
+using PracticeASPNET.Domain.Requests.Events;
 using PracticeASPNET.Utils;
 
 namespace PracticeASPNET.Domain.Entities.Requests;
 
 public class Request
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; private init; }
     public User User { get; private set; }
     public Document Document { get; private set; }
     public Workflow Workflow { get; private set; }

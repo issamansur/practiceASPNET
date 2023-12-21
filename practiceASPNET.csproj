@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Domain\Entities\Requests\4jlh1gv5.ahl~" />
     <None Remove="UpgradeLog.htm" />
   </ItemGroup>
 

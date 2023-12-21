@@ -10,12 +10,10 @@ static public class Validator
     static Regex EmailRegex => new Regex(EmailPattern);
     static Regex NameRegex => new Regex(NamePattern);
 
-    static public void IsValidEmail(string email, string fieldName = "Email")
+    static public void IsValidGuid(Guid id, string fieldName="Id")
     {
-        if (string.IsNullOrEmpty(email))
-            throw new ArgumentException($"Field '{fieldName}' can't be empty!");
-        if (!EmailRegex.IsMatch(email))
-            throw new ArgumentException($"Field '{fieldName}' has invalid format!");
+        if (id == Guid.Empty)
+            throw new ArgumentException($"Field '{fieldName}' can't be 'Guid.Empty'!");
     }
 
     static public void IsValidName(string name, string fieldName = "Name")
@@ -26,9 +24,11 @@ static public class Validator
             throw new ArgumentException($"Field '{fieldName}' has invalid format!");
     }
 
-    static public void IsValidGuid(Guid id, string fieldName="Id")
+    static public void IsValidEmail(string email, string fieldName = "Email")
     {
-        if (id == Guid.Empty)
-            throw new ArgumentException($"Field '{fieldName}' can't be 'Guid.Empty'!");
+        if (string.IsNullOrEmpty(email))
+            throw new ArgumentException($"Field '{fieldName}' can't be empty!");
+        if (!EmailRegex.IsMatch(email))
+            throw new ArgumentException($"Field '{fieldName}' has invalid format!");
     }
 }

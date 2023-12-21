@@ -7,9 +7,9 @@ namespace PracticeASPNET.Domain.Requests.Events;
 
 public abstract class IEvent
 {
-    public Guid Id { get; init; }
-    public Guid RequestId { get; set; }
-    public string Data { get; set; }
+    public Guid Id { get; private init; }
+    public Guid RequestId { get; private set; }
+    public string Data { get; private set; }
 
     public IEvent(Guid id, Guid requestId, string data)
     {

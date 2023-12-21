@@ -4,8 +4,8 @@ namespace PracticeASPNET.Domain;
 
 public class Workflow
 {
-    public Guid WorkflowTemplateId { get; init; }
-    public string Name { get; set; }
+    public Guid WorkflowTemplateId { get; private init; }
+    public string Name { get; private set; }
 
     public List<WorkflowStep> Steps { get; private set; }
 
