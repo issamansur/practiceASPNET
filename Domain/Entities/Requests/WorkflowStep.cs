@@ -8,7 +8,7 @@ public class WorkflowStep
     public Guid Id { get; init; }
     public string Title { get; private set; }
     public int Order { get; private set; }
-    public User? User { get; private set; }
+    public Guid? UserId { get; private set; }
     public Guid? RoleId { get; private set; }
     public string Comment { get; private set; }
     public Status Status { get; private set; }
@@ -18,25 +18,24 @@ public class WorkflowStep
         string title, 
         int order,
         string comment, 
-        User? user, 
+        Guid? userId, 
         Guid? roleId, 
         Status status)
     {
         Validator.IsValidGuid(id);
         Validator.IsValidName(title, "Title");
-        Validator.IsValidOrder(order);
-        if (order < 0)
-            throw new ArgumentException("Order must be greater than 0");
-        if (user is not null && roleId is not null)
-            throw new ArgumentException("User and RoleId cannot be set at the same time");
-        if (user is null && roleId is null)
-            throw new ArgumentException("User or RoleId must be set");
+        Validator.IsValidOrder(order, 3);
+        // Use Math Logic to check only one of the two is set (XOR_Logic)
+        if (userId is null == roleId is null)
+            throw new ArgumentException(
+                "Only one of parameters (userId/roleId) is need to set"
+            );
         ArgumentNullException.ThrowIfNull(status);
 
         Id = id;
         Title = title;
         Order = order;
-        User = user;
+        UserId = userId;
         RoleId = roleId;
         Comment = comment;
         Status = status;
@@ -46,31 +45,41 @@ public class WorkflowStep
         string title, 
         int order,
         string comment = "",
-        User? user = null, 
+        Guid? userId = null, 
         Guid? roleId = null)
     {
+        Status status = order == 0 ? Status.Pending : Status.Frozen;
         return new WorkflowStep(
             Guid.NewGuid(), 
             title, 
             order, 
-            comment,  
-            user, 
+            comment,
+            userId, 
             roleId,
-            Status.Pending);
+            status);
     }
 
-    public void SetStatus(User user, Status status)
+    public void SetStatus(User User, Status status)
     {
-        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(User);
         ArgumentNullException.ThrowIfNull(status);
 
-        if (User is not null && User.Id != user.Id ||
-            RoleId is not null && RoleId != user.RoleId)
+        if (User.Id != UserId && User.RoleId != RoleId)
             throw new ArgumentException("User is not allowed to change this step status");
 
-        User = user;
-        RoleId = null;
-
+        UserId = User.Id;
         Status = status;
+    }
+
+    public void SetComment(User User, string comment)
+    {
+        ArgumentNullException.ThrowIfNull(User);
+        ArgumentNullException.ThrowIfNull(comment);
+
+        if (User.Id != UserId && User.RoleId != RoleId)
+            throw new ArgumentException("User is not allowed to change this step comment");
+
+        UserId = User.Id;
+        Comment = comment;
     }
 }

@@ -1,3 +1,4 @@
+using PracticeASPNET.Domain;
 using PracticeASPNET.Domain.Entities.Workflows.Templates;
 using System.Text.RegularExpressions;
 
@@ -33,7 +34,7 @@ public static class Validator
             throw new ArgumentException($"Field '{fieldName}' has invalid format!");
     }
 
-    public static void IsValidCollection(ICollection<WorkflowStepTemplate> collection, string fieldName = "Collection", int max = 5)
+    public static void IsValidCollection(ICollection<WorkflowStepTemplate> collection, int max = 5, string fieldName = "WorkflowStepTemplate")
     {
         if (collection is null)
             throw new ArgumentException($"Field '{fieldName}' can't be empty!");
@@ -41,7 +42,15 @@ public static class Validator
             throw new ArgumentException($"Field '{fieldName}' must have at least {max} items!");
     }
 
-    public static void IsValidOrder(int order, string fieldName = "Order", int max = 5)
+    public static void IsValidCollection(ICollection<WorkflowStep> collection, int max = 5, string fieldName = "WorkflowStep")
+    {
+        if (collection is null)
+            throw new ArgumentException($"Field '{fieldName}' can't be empty!");
+        if (collection.Count == 0 || collection.Count < max) 
+            throw new ArgumentException($"Field '{fieldName}' must have at least {max} items!");
+    }
+
+    public static void IsValidOrder(int order, int max = 5, string fieldName = "Order")
     {
         if (order < 0)
             throw new ArgumentException($"Field '{fieldName}' must be greater than 0!");

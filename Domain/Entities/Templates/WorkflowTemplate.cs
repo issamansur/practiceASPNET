@@ -13,16 +13,22 @@ public class WorkflowTemplate
     {
         Validator.IsValidGuid(id);
         Validator.IsValidName(name);
-        Validator.IsValidCollection(steps, "WorkflowStepTemplate", 3);
+        Validator.IsValidCollection(steps, 3);
 
         Id = id;
         Name = name;
         Steps = steps;
     }
 
+    public static WorkflowTemplate Create(string name, List<WorkflowStepTemplate> steps)
+    {
+        return new WorkflowTemplate(Guid.NewGuid(), name, steps);
+    }
+
     public Request Create(User user, Document document)
     {
-        // TODO
-        return new Request();
+        Workflow workflow = Workflow.Create(Name, this);
+        Request request = Request.Create(user, document, workflow);
+        return request;
     }
 }
