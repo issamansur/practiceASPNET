@@ -3,7 +3,7 @@ using AutoFixture;
 using PracticeASPNET.Domain.Entities.Users;
 using System;
 
-namespace PracticeASPNET.Tests.Domain
+namespace PracticeASPNET.Tests.Domain.Entities.Users
 {
     public class UserTests
     {
@@ -12,16 +12,19 @@ namespace PracticeASPNET.Tests.Domain
         public UserTests()
         {
             _fixture = new Fixture();
+            _fixture.Add
         }
 
-        [Fact]
-        public void Constructor_ValidParameters_ShouldReturnUser()
+        [Theory, AutoData]
+        public void Constructor_ValidParameters_ShouldReturnUser(
+            [RegularExpression(@"^[a-zA-Z0-9._+-]{2, 20}$")] string validName,
+            [RegularExpression(@"^[a-zA-Z0-9._+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$")] string validEmail)
         {
             // Arrange
             var id = _fixture.Create<Guid>();
             var roleId = _fixture.Create<Guid>();
-            var name = _fixture.Create<string>();
-            var email = _fixture.Create<string>();
+            var name = validName;
+            var email = validEmail;
 
             // Act
             var user = new User(id, roleId, name, email);
@@ -34,26 +37,30 @@ namespace PracticeASPNET.Tests.Domain
             Assert.Equal(email, user.Email);
         }
 
-        [Fact]
-        public void Constructor_InvalidParameters_ShouldThrowException()
+        [Theory, AutoData]
+        public void Constructor_InvalidParameters_ShouldThrowException(
+            [RegularExpression(@"^[a-zA-Z0-9._+-]{1}$")] string invalidName,
+            string invalidEmail)
         {
             // Arrange
             var id = Guid.Empty;
             var roleId = Guid.Empty;
-            var name = string.Empty;
-            var email = "invalid email";
+            var name = invalidName;
+            var email = invalidEmail;
 
             // Act & Assert
             Assert.Throws<ArgumentException>(() => new User(id, roleId, name, email));
         }
 
-        [Fact]
-        public void Create_ValidParameters_ShouldReturnUser()
+        [Theory, AutoData]
+        public void Create_ValidParameters_ShouldReturnUser(
+            [RegularExpression(@"^[a-zA-Z0-9._+-]{2, 20}$")] string validName,
+            [RegularExpression(@"^[a-zA-Z0-9._+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$")] string validEmail)
         {
             // Arrange
             var roleId = _fixture.Create<Guid>();
-            var name = _fixture.Create<string>();
-            var email = _fixture.Create<string>();
+            var name = validName;
+            var email = validEmail;
 
             // Act
             var user = User.Create(roleId, name, email);

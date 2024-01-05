@@ -1,42 +1,51 @@
-using Xunit;
 using AutoFixture;
+using AutoFixture.Xunit2;
 using PracticeASPNET.Domain.Entities.Requests;
+using PracticeASPNET.Utils;
+using System.ComponentModel.DataAnnotations;
+using Xunit;
 
-namespace PracticeASPNET.Tests.Domain.Entities.Requests
+namespace PracticeASPNET.Tests.Domain.Entities.Requests;
+
+public class DocumentTests
 {
-    public class DocumentTests
+    public class DocumentCustomization : ICustomization
     {
-        private readonly IFixture _fixture;
-
-        public DocumentTests()
+        public void Customize(IFixture fixture)
         {
-            _fixture = new Fixture();
+            fixture.Customizations.Add(new RegularExpressionGenerator());
         }
+    }
 
-        [Fact]
-        public void Create_ValidParameters_ShouldReturnDocument()
-        {
-            // Arrange
-            var name = _fixture.Create<string>();
-            var email = _fixture.Create<string>();
+    [Theory, AutoData]
+    public void Document_WithValidNameAndEmail_ShouldBeCreated(
+        [RegularExpression(@"^[a-zA-Z]{2,20}$")] string validName,
+        [RegularExpression(@"^[a-zA-Z0-9._+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$")] string validEmail)
+    {
+        // Act
+        Document document = Document.Create(validName, validEmail);
 
-            // Act
-            var document = Document.Create(name, email);
+        // Assert
+        Assert.NotNull(document);
+        Assert.Equal(validName, document.Name);
+        Assert.Equal(validEmail, document.Email);
+    }
 
-            // Assert
-            Assert.NotNull(document);
-            Assert.Equal(name, document.Name);
-            Assert.Equal(email, document.Email);
-        }
+    [Theory, AutoData]
+    public void Document_WithInvalidName_ShouldThrowException(
+        [RegularExpression(@"^[a-zA-Z0-9._+-]{1}$")] string invalidName,
+        [RegularExpression(@"^[a-zA-Z0-9._+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$")] string validEmail)
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => Document.Create(invalidName, validEmail));
+    }
 
-        [Theory]
-        [InlineData(null, "validemail@example.com")]
-        [InlineData("Valid Name", null)]
-        [InlineData(null, null)]
-        public void Create_InvalidParameters_ShouldThrowException(string name, string email)
-        {
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => Document.Create(name, email));
-        }
+    [Theory, AutoData]
+    public void Document_WithInvalidEmail_ShouldThrowException(
+        [RegularExpression(@"^[a-zA-Z]{2,20}$")] string validName,
+        string invalidEmail)
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => Document.Create(validName, invalidEmail));
     }
 }

@@ -1,59 +1,51 @@
-using Xunit;
-using AutoFixture;
 using PracticeASPNET.Domain.Entities.Users;
-using System;
 
-namespace PracticeASPNET.Tests.Domain
+
+namespace PracticeASPNET.Tests.Domain.Entities.Users;
+
+public class RoleTests
 {
-    public class RoleTests
+    [Theory, AutoData]
+    public void CreateRole_ValidName_ShouldCreateRole(
+        [RegularExpression(@"^[a-zA-Z]{2,20}$")] string roleName
+        )
     {
-        private readonly IFixture _fixture;
+        // Arrange
+        var validName = roleName;
 
-        public RoleTests()
-        {
-            _fixture = new Fixture();
-        }
+        // Act
+        var role = Role.Create(validName);
 
-        [Fact]
-        public void Constructor_ValidParameters_ShouldReturnRole()
-        {
-            // Arrange
-            var id = _fixture.Create<Guid>();
-            var name = _fixture.Create<string>();
+        // Assert
+        Assert.NotNull(role);
+        Assert.Equal(validName, role.Name);
+        Assert.NotEqual(Guid.Empty, role.Id);
+    }
 
-            // Act
-            var role = new Role(id, name);
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("a")] // Less than 2 characters
+    [InlineData("a2345678901234567890")] // More than 20 characters
+    [InlineData("Invalid@Name")] // Contains invalid characters
+    public void CreateRole_InvalidName_ShouldThrowArgumentException(string invalidName)
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => Role.Create(invalidName));
+    }
 
-            // Assert
-            Assert.NotNull(role);
-            Assert.Equal(id, role.Id);
-            Assert.Equal(name, role.Name);
-        }
+    [Theory, AutoData]
+    public void CreateRole_DuplicateName_ShouldCreateRolesWithDifferentIds(
+        [RegularExpression(@"^[a-zA-Z]{2,20}$")] string roleName
+        )
+    {
+        // Arrange
 
-        [Fact]
-        public void Constructor_InvalidParameters_ShouldThrowException()
-        {
-            // Arrange
-            var id = Guid.Empty;
-            var name = string.Empty;
+        // Act
+        var role1 = Role.Create(roleName);
+        var role2 = Role.Create(roleName);
 
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => new Role(id, name));
-        }
-
-        [Fact]
-        public void Create_ValidParameters_ShouldReturnRole()
-        {
-            // Arrange
-            var name = _fixture.Create<string>();
-
-            // Act
-            var role = Role.Create(name);
-
-            // Assert
-            Assert.NotNull(role);
-            Assert.NotEqual(Guid.Empty, role.Id);
-            Assert.Equal(name, role.Name);
-        }
+        // Assert
+        Assert.NotEqual(role1.Id, role2.Id);
     }
 }

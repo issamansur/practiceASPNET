@@ -20,8 +20,8 @@ namespace PracticeASPNET.Tests.Domain.Entities.Templates
         {
             // Arrange
             var id = _fixture.Create<Guid>();
-            var title = _fixture.Create<string>();
-            var order = _fixture.Create<int>();
+            var title = "Name";
+            var order = 1;
             var comment = _fixture.Create<string>();
             var userId = _fixture.Create<Guid?>();
             var roleId = _fixture.Create<Guid?>();
@@ -45,8 +45,8 @@ namespace PracticeASPNET.Tests.Domain.Entities.Templates
         public void Create_ValidParameters_ShouldReturnWorkflowStep()
         {
             // Arrange
-            var title = _fixture.Create<string>();
-            var order = _fixture.Create<int>();
+            var title = "Name";
+            var order = 1;
             var comment = _fixture.Create<string>();
             var userId = _fixture.Create<Guid?>();
             var roleId = _fixture.Create<Guid?>();

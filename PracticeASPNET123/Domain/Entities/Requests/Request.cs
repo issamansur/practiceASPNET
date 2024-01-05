@@ -15,7 +15,7 @@ public class Request
     public Status Status { get; private set; }
     public int CurrentStep { get; private set; }
 
-    public List<Event> Events { get; private init; }
+    private List<Event> Events { get; init; }
 
     public bool IsApproved => Status == Status.Approved;
     public bool IsRejected => Status == Status.Rejected;

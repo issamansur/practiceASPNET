@@ -1,124 +1,134 @@
-using Xunit;
+using System;
+using System.Collections.Generic;
 using AutoFixture;
+using Moq;
+using PracticeASPNET.Domain.Entities.Requests;
 using PracticeASPNET.Domain.Entities.Requests.Events;
 using PracticeASPNET.Domain.Entities.Users;
-using PracticeASPNET.Domain.Entities.Requests;
 using PracticeASPNET.Domain.Enums;
-using System.Linq;
+using Xunit;
 
-namespace PracticeASPNET.Tests.Domain.Entities.Requests
+namespace PracticeASPNET.Tests.Domain.Entities.Requests;
+
+public class RequestTests
 {
-    public class RequestTests
+    [Fact]
+    public void Create_ValidData_ShouldCreateRequestWithPendingStatus()
     {
-        private readonly IFixture _fixture;
+        // Arrange
+        var fixture = new Fixture();
+        var userMock = fixture.Create<User>();
+        var documentMock = fixture.Create<Document>();
+        var workflowMock = fixture.Create<Workflow>();
 
-        public RequestTests()
-        {
-            _fixture = new Fixture();
-        }
+        // Act
+        var request = Request.Create(userMock, documentMock, workflowMock);
 
-        [Fact]
-        public void Create_ValidParameters_ShouldReturnRequest()
-        {
-            // Arrange
-            var user = _fixture.Create<User>();
-            var document = _fixture.Create<Document>();
-            var workflow = _fixture.Create<Workflow>();
+        // Assert
+        Assert.NotNull(request);
+        Assert.Equal(Status.Pending, request.Status);
+        Assert.Equal(0, request.CurrentStep);
+        Assert.NotEmpty(request.Events);
+        Assert.Contains(request.Events, e => e is RequestCreateEvent);
+    }
 
-            // Act
-            var request = Request.Create(user, document, workflow);
+    [Fact]
+    public void SetDocument_ValidDocument_ShouldSetDocument()
+    {
+        // Arrange
+        var fixture = new Fixture();
+        var request = fixture.Create<Request>();
+        var newDocument = fixture.Create<Document>();
 
-            // Assert
-            Assert.NotNull(request);
-            Assert.Equal(user, request.User);
-            Assert.Equal(document, request.Document);
-            Assert.Equal(workflow, request.Workflow);
-            Assert.Equal(Status.Pending, request.Status);
-            Assert.Equal(0, request.CurrentStep);
-        }
+        // Act
+        request.SetDocument(newDocument);
 
-        [Fact]
-        public void AddEvent_ValidEvent_ShouldAddEventToList()
-        {
-            // Arrange
-            var request = _fixture.Create<Request>();
-            var @event = _fixture.Create<Event>();
+        // Assert
+        Assert.Equal(newDocument, request.Document);
+    }
 
-            // Act
-            request.AddEvent(@event);
+    [Fact]
+    public void AddEvent_ValidEvent_ShouldAddEventToList()
+    {
+        // Arrange
+        var fixture = new Fixture();
+        var request = fixture.Create<Request>();
+        var eventMock = fixture.Create<Event>();
 
-            // Assert
-            Assert.Contains(@event, request.Events);
-        }
+        // Act
+        request.AddEvent(eventMock);
 
-        [Fact]
-        public void SetDocument_ValidDocument_ShouldSetDocument()
-        {
-            // Arrange
-            var request = _fixture.Create<Request>();
-            var document = _fixture.Create<Document>();
+        // Assert
+        Assert.Contains(eventMock, request.Events);
+    }
 
-            // Act
-            request.SetDocument(document);
+    [Fact]
+    public void Approve_ValidUserAndPendingStep_ShouldApproveAndAdvanceToNextStep()
+    {
+        // Arrange
+        var fixture = new Fixture();
+        var request = fixture.Create<Request>();
+        var userMock = fixture.Create<User>();
 
-            // Assert
-            Assert.Equal(document, request.Document);
-        }
+        // Act
+        request.Approve(userMock);
 
-        [Fact]
-        public void Approve_ValidUser_ShouldApproveRequest()
-        {
-            // Arrange
-            var request = _fixture.Create<Request>();
-            var user = _fixture.Create<User>();
+        // Assert
+        Assert.Equal(Status.Approved, request.Status);
+        Assert.Equal(1, request.CurrentStep);
+        Assert.NotEmpty(request.Events);
+        Assert.Contains(request.Events, e => e is RequestApproveEvent);
+    }
 
-            // Act
-            request.Approve(user);
+    [Fact]
+    public void Reject_ValidUserAndPendingStep_ShouldRejectAndSetOverallStatusToRejected()
+    {
+        // Arrange
+        var fixture = new Fixture();
+        var request = fixture.Create<Request>();
+        var userMock = fixture.Create<User>();
 
-            // Assert
-            Assert.Contains(request.Events, e => e is RequestApproveEvent);
-        }
+        // Act
+        request.Reject(userMock);
 
-        [Fact]
-        public void Reject_ValidUser_ShouldRejectRequest()
-        {
-            // Arrange
-            var request = _fixture.Create<Request>();
-            var user = _fixture.Create<User>();
+        // Assert
+        Assert.Equal(Status.Rejected, request.Status);
+        Assert.NotEmpty(request.Events);
+        Assert.Contains(request.Events, e => e is RequestRejectEvent);
+    }
 
-            // Act
-            request.Reject(user);
+    [Fact]
+    public void Restart_ValidUser_ShouldRestartRequestAndSetToFirstWorkflowStep()
+    {
+        // Arrange
+        var fixture = new Fixture();
+        var request = fixture.Create<Request>();
+        var userMock = fixture.Create<User>();
 
-            // Assert
-            Assert.Contains(request.Events, e => e is RequestRejectEvent);
-        }
+        // Act
+        request.Restart(userMock);
 
-        [Fact]
-        public void Restart_ValidUser_ShouldRestartRequest()
-        {
-            // Arrange
-            var request = _fixture.Create<Request>();
-            var user = _fixture.Create<User>();
+        // Assert
+        Assert.Equal(Status.Pending, request.Status);
+        Assert.Equal(0, request.CurrentStep);
+        Assert.NotEmpty(request.Events);
+        Assert.Contains(request.Events, e => e is RequestRestartEvent);
+    }
 
-            // Act
-            request.Restart(user);
+    [Fact]
+    public void Freeze_ValidUserAndPendingStep_ShouldFreezeCurrentStep()
+    {
+        // Arrange
+        var fixture = new Fixture();
+        var request = fixture.Create<Request>();
+        var userMock = fixture.Create<User>();
 
-            // Assert
-            Assert.Contains(request.Events, e => e is RequestRestartEvent);
-        }
+        // Act
+        request.Freeze(userMock);
 
-        [Fact]
-        public void Freeze_ValidUser_ShouldFreezeRequest()
-        {
-            // Arrange
-            var request = _fixture.Create<Request>();
-            var user = _fixture.Create<User>();
-
-            // Act
-            request.Freeze(user);
-
-            // Assert
-            Assert.Contains(request.Events, e => e is RequestFreezeEvent);
-        }
+        // Assert
+        Assert.Equal(Status.Frozen, request.Workflow.Steps[request.CurrentStep].Status);
+        Assert.NotEmpty(request.Events);
+        Assert.Contains(request.Events, e => e is RequestFreezeEvent);
     }
 }

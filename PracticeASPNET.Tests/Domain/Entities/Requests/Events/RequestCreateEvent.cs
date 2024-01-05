@@ -1,9 +1,9 @@
 using Xunit;
 using AutoFixture;
-using PracticeASPNET.Domain.Entity.Requests.Events;
+using PracticeASPNET.Domain.Entities.Requests.Events;
 using System;
 
-namespace PracticeASPNET.Tests.Domain.Entity.Requests.Events
+namespace PracticeASPNET.Tests.Domain.Entities.Requests.Events
 {
     public class RequestCreateEventTests
     {
@@ -23,12 +23,12 @@ namespace PracticeASPNET.Tests.Domain.Entity.Requests.Events
             var data = _fixture.Create<string>();
 
             // Act
-            var event = new RequestCreateEvent(id, requestId, data);
+            var my_event = new RequestCreateEvent(id, requestId, data);
 
-            // Assert
-            Assert.Equal(id, event.Id);
-            Assert.Equal(requestId, event.RequestId);
-            Assert.Equal(data, event.Data);
+        // Assert
+        Assert.Equal(id, my_event.Id);
+        Assert.Equal(requestId, my_event.RequestId);
+        Assert.Equal(data, my_event.Data);
         }
 
         [Fact]
@@ -39,11 +39,11 @@ namespace PracticeASPNET.Tests.Domain.Entity.Requests.Events
             var data = _fixture.Create<string>();
 
             // Act
-            var event = RequestCreateEvent.Create(requestId, data);
+            var my_event = RequestCreateEvent.Create(requestId, data);
 
             // Assert
-            Assert.Equal(requestId, event.RequestId);
-            Assert.Equal(data, event.Data);
+            Assert.Equal(requestId, my_event.RequestId);
+        Assert.Equal(data, my_event.Data);
         }
     }
 }
